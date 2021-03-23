@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>js中new干了什么 | WangJunMing</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="一说起 js 中的new，马上容易跳到大学里学过的 java 的new。所以网上看到讨论 js 的new的文章，都喜欢从面向对象思路说起。与初学者感受而言，无疑将概念复杂化了。
+
+这篇文章就从【举例子】的角度，来学学 js 中的 new。
+
+想象我们在玩一个战争类游戏，玩家可以操作一堆坦克攻击敌方。那这个游戏肯定需要生产坦克，我们就来研究以下这个坦克的生产过程。
+
+一辆坦克在计算机里就 ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.f63a180a.css" as="style"><link rel="preload" href="/assets/js/app.4f78ac45.js" as="script"><link rel="preload" href="/assets/js/6.a3faf424.js" as="script"><link rel="preload" href="/assets/js/3.c93107eb.js" as="script"><link rel="preload" href="/assets/js/26.eef39229.js" as="script"><link rel="prefetch" href="/assets/js/10.392935be.js"><link rel="prefetch" href="/assets/js/11.811a1c66.js"><link rel="prefetch" href="/assets/js/12.10959571.js"><link rel="prefetch" href="/assets/js/13.0fb2f0c4.js"><link rel="prefetch" href="/assets/js/14.4e95d46b.js"><link rel="prefetch" href="/assets/js/15.6444689d.js"><link rel="prefetch" href="/assets/js/16.4822ee32.js"><link rel="prefetch" href="/assets/js/17.69db6a71.js"><link rel="prefetch" href="/assets/js/18.487e22b5.js"><link rel="prefetch" href="/assets/js/19.d4005a46.js"><link rel="prefetch" href="/assets/js/20.d425f606.js"><link rel="prefetch" href="/assets/js/21.410819d5.js"><link rel="prefetch" href="/assets/js/22.e8d9d6c8.js"><link rel="prefetch" href="/assets/js/23.5137aa0a.js"><link rel="prefetch" href="/assets/js/24.4a43e957.js"><link rel="prefetch" href="/assets/js/25.90ac7b99.js"><link rel="prefetch" href="/assets/js/27.84b1618e.js"><link rel="prefetch" href="/assets/js/28.ea0c286e.js"><link rel="prefetch" href="/assets/js/29.3eddc3b0.js"><link rel="prefetch" href="/assets/js/30.7b9b3561.js"><link rel="prefetch" href="/assets/js/31.d5150dee.js"><link rel="prefetch" href="/assets/js/32.5a8242c0.js"><link rel="prefetch" href="/assets/js/33.e2609257.js"><link rel="prefetch" href="/assets/js/34.c3ea21e1.js"><link rel="prefetch" href="/assets/js/35.19fdd4f5.js"><link rel="prefetch" href="/assets/js/36.54c52f58.js"><link rel="prefetch" href="/assets/js/37.af980e6b.js"><link rel="prefetch" href="/assets/js/38.61d14197.js"><link rel="prefetch" href="/assets/js/39.e8ef2b39.js"><link rel="prefetch" href="/assets/js/4.115d212f.js"><link rel="prefetch" href="/assets/js/40.06e8672d.js"><link rel="prefetch" href="/assets/js/41.a4dec16c.js"><link rel="prefetch" href="/assets/js/42.f5608e4f.js"><link rel="prefetch" href="/assets/js/43.14b35bca.js"><link rel="prefetch" href="/assets/js/44.9e657472.js"><link rel="prefetch" href="/assets/js/45.8aa127f9.js"><link rel="prefetch" href="/assets/js/46.01d25249.js"><link rel="prefetch" href="/assets/js/47.ca96eb82.js"><link rel="prefetch" href="/assets/js/48.fa475f50.js"><link rel="prefetch" href="/assets/js/49.7446c092.js"><link rel="prefetch" href="/assets/js/5.264a5b6a.js"><link rel="prefetch" href="/assets/js/50.60148e16.js"><link rel="prefetch" href="/assets/js/51.f4a2daa7.js"><link rel="prefetch" href="/assets/js/52.ff4c76b2.js"><link rel="prefetch" href="/assets/js/53.eb3706e3.js"><link rel="prefetch" href="/assets/js/54.cc25c1c7.js"><link rel="prefetch" href="/assets/js/55.a2083f52.js"><link rel="prefetch" href="/assets/js/7.e5b64fb2.js"><link rel="prefetch" href="/assets/js/8.efd2d38a.js"><link rel="prefetch" href="/assets/js/9.1e3eed58.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.0f8d5620.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f63a180a.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuepress-theme-blog__global-layout"><section id="header-wrapper"><header id="header"><div class="header-wrapper"><div class="title"><a href="/" class="nav-link home-link">WangJunMing </a></div> <div class="header-right-wrap"><ul class="nav"><li class="nav-item"><a href="/" class="nav-link">Blog</a></li><li class="nav-item"><a href="/tag/" class="nav-link">Tags</a></li></ul> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></div></header></section> <div id="mobile-header"><div class="mobile-header-bar"><div class="mobile-header-title"><a href="/" class="nav-link mobile-home-link">WangJunMing </a> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div> <div class="mobile-menu-wrapper"><hr class="menu-divider"> <ul class="mobile-nav"><li class="mobile-nav-item"><a href="/" class="nav-link">Blog</a></li><li class="mobile-nav-item"><a href="/tag/" class="nav-link">Tags</a></li> <li class="mobile-nav-item"><!----></li></ul></div></div></div> <div class="content-wrapper"><div id="vuepress-theme-blog__post-layout"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><header><h1 itemprop="name headline" class="post-title">
+        js中new干了什么
+      </h1> <div class="post-meta"><div itemprop="publisher author" itemtype="http://schema.org/Person" itemscope="itemscope" class="post-meta-author"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> <span itemprop="name">WangJunMing</span> <span itemprop="address">   in HangZhou</span></div> <div class="post-meta-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <time pubdate itemprop="datePublished" datetime="2017-09-10T00:00:00.000Z">
+      Sun Sep 10 2017
+    </time></div> <ul itemprop="keywords" class="post-meta-tags"><li class="post-tag" data-v-42ccfcd5><a href="/tag/JavaScript" data-v-42ccfcd5><span data-v-42ccfcd5>JavaScript</span></a></li></ul></div></header> <div itemprop="articleBody" class="content__default"><p>一说起 js 中的<code>new</code>，马上容易跳到大学里学过的 java 的<code>new</code>。所以网上看到讨论 js 的<code>new</code>的文章，都喜欢从面向对象思路说起。与初学者感受而言，无疑将概念复杂化了。</p> <p>这篇文章就从【举例子】的角度，来学学 js 中的 new。</p> <p>想象我们在玩一个战争类游戏，玩家可以操作一堆坦克攻击敌方。那这个游戏肯定需要生产坦克，我们就来研究以下这个坦克的生产过程。</p> <p>一辆坦克在计算机里就是一堆属性，比如</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">var</span> tank <span class="token operator">=</span> <span class="token punctuation">{</span>
+  id<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  攻击力<span class="token operator">:</span> <span class="token number">199</span><span class="token punctuation">,</span>
+  移速<span class="token operator">:</span> <span class="token number">50</span><span class="token punctuation">,</span>
+  装甲<span class="token operator">:</span> <span class="token number">123</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">开炮</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* 轰他鸭的 */</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">阵亡</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* 报销了 */</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+兵工厂<span class="token punctuation">.</span><span class="token function">制造</span><span class="token punctuation">(</span>tank<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>那假如需要 50 辆坦克冲脸呢？</p> <p>那我们就启动 50 次造坦克</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">var</span> tanks <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> tank<span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">50</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  tank <span class="token operator">=</span> <span class="token punctuation">{</span>
+    id<span class="token operator">:</span> i<span class="token punctuation">,</span>
+    攻击力<span class="token operator">:</span> <span class="token number">199</span><span class="token punctuation">,</span>
+    移速<span class="token operator">:</span> <span class="token number">50</span><span class="token punctuation">,</span>
+    装甲<span class="token operator">:</span> <span class="token number">123</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">开炮</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">/* 轰他鸭的 */</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">阵亡</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">/* 报销了 */</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  tanks<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>tank<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+兵工厂<span class="token punctuation">.</span><span class="token function">批量制造</span><span class="token punctuation">(</span>tanks<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>一下子就造完了，似乎很简单。</p> <p>但是，以上的代码存在不少问题：</p> <ol><li>坦克的开炮和阵亡都是一样的，只需要各自引用同一个函数就好，没必要重复 50 次</li> <li>坦克的攻击力、移动速度、装甲也都一样的，没必要 重复 50 次</li> <li>只有 id 需要使用不一样的，因为每个坦克有自己的 id</li></ol> <p>那我们怎样改进呢？js 中，是用原型链来解决重复创建问题的：我们先创建一个「坦克原型」，然后让「坦克」的 <code>__proto__</code> 指向「坦克原型」</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">var</span> tankOrigin <span class="token operator">=</span> <span class="token punctuation">{</span>
+  id<span class="token operator">:</span> i<span class="token punctuation">,</span>
+  攻击力<span class="token operator">:</span> <span class="token number">199</span><span class="token punctuation">,</span>
+  移速<span class="token operator">:</span> <span class="token number">50</span><span class="token punctuation">,</span>
+  装甲<span class="token operator">:</span> <span class="token number">123</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">开炮</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* 轰他鸭的 */</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">阵亡</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* 报销了 */</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> tanks <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> tank<span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">50</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  tank <span class="token operator">=</span> <span class="token punctuation">{</span>
+    id<span class="token operator">:</span> id
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  tank<span class="token punctuation">.</span>__proto__ <span class="token operator">=</span> tankOrigin<span class="token punctuation">;</span>
+  tanks<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>tank<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+兵工厂<span class="token punctuation">.</span><span class="token function">批量制造</span><span class="token punctuation">(</span>tanks<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>这样似乎还是有点问题，因为创建一个 tank 的代码分散在两个地方，于是再改进一下</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">tank</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> 临时对象 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+  临时对象<span class="token punctuation">.</span>__proto__ <span class="token operator">=</span> tankOrigin<span class="token punctuation">;</span>
+  临时对象<span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> 临时对象<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">var</span> tankOrigin <span class="token operator">=</span> <span class="token punctuation">{</span>
+  id<span class="token operator">:</span> i<span class="token punctuation">,</span>
+  攻击力<span class="token operator">:</span> <span class="token number">199</span><span class="token punctuation">,</span>
+  移速<span class="token operator">:</span> <span class="token number">50</span><span class="token punctuation">,</span>
+  装甲<span class="token operator">:</span> <span class="token number">123</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">开炮</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* 轰他鸭的 */</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">阵亡</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* 报销了 */</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><p>然后就可以愉快的引用<code>tank</code>来创建<code>tank</code>了</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">var</span> tanks <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">50</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  tanks<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">tank</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+兵营<span class="token punctuation">.</span><span class="token function">批量制造</span><span class="token punctuation">(</span>tanks<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>而 JS 之父关怀我们，只要我们在使用<code>tank</code>函数时，加上<code>new</code>关键字，就可以少做四件事</p> <ol><li>不用创建临时对象，因为 new 会帮你做（你使用「this」就可以访问到临时对象</li> <li>不用绑定原型，因为 new 会帮你做（new 为了知道原型在哪，所以指定原型的名字为 prototype</li> <li>不用 return 临时对象，因为 new 会帮你做</li> <li>不要给原型想名字了，因为 new 指定名字为 prototype</li></ol> <p>那么用<code>new</code>关键字来写就是</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">tank</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+tank<span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token punctuation">{</span>
+  id<span class="token operator">:</span> i<span class="token punctuation">,</span>
+  攻击力<span class="token operator">:</span> <span class="token number">199</span><span class="token punctuation">,</span>
+  移速<span class="token operator">:</span> <span class="token number">50</span><span class="token punctuation">,</span>
+  装甲<span class="token operator">:</span> <span class="token number">123</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">开炮</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* 轰他鸭的 */</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">阵亡</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* 报销了 */</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> tanks <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">50</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  tanks<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">tank</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+兵营<span class="token punctuation">.</span><span class="token function">批量制造</span><span class="token punctuation">(</span>tanks<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>值得注意的是<code>constructor</code>属性。new 操作为了记录「临时对象是由哪个函数创建的」，所以预先给「tank.prototype」加了一个 constructor 属性，所以要这样写才不会搞错<code>constructor</code>属性</p> <div class="language-js extra-class"><pre class="language-js"><code>tank<span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token punctuation">{</span>
+  constructor<span class="token operator">:</span> task<span class="token punctuation">,</span>
+  id<span class="token operator">:</span> i<span class="token punctuation">,</span>
+  攻击力<span class="token operator">:</span> <span class="token number">199</span><span class="token punctuation">,</span>
+  移速<span class="token operator">:</span> <span class="token number">50</span><span class="token punctuation">,</span>
+  装甲<span class="token operator">:</span> <span class="token number">123</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">开炮</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* 轰他鸭的 */</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">阵亡</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* 报销了 */</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><p>这样就完美了。</p> <p>所以，简单总结下：<code>new</code>就是个语法糖，在生成对象时，可用工厂函数的方式，帮我们复用原型对象，少写重复代码。</p></div> <footer><!----> <hr> <!----></footer></article> <!----></div></div> <footer class="footer" data-v-3d9deeb8><div class="footer-left-wrap" data-v-3d9deeb8><ul class="contact" data-v-3d9deeb8></ul></div> <div class="footer-right-wrap" data-v-3d9deeb8><ul class="copyright" data-v-3d9deeb8></ul></div></footer></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.4f78ac45.js" defer></script><script src="/assets/js/6.a3faf424.js" defer></script><script src="/assets/js/3.c93107eb.js" defer></script><script src="/assets/js/26.eef39229.js" defer></script>
+  </body>
+</html>
